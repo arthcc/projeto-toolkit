@@ -3,7 +3,7 @@
     using System;
     using TrabalhoFerramentas.Metodos;
     using TrabalhoFerramentas.Metodos.Classificador;
-
+    using static TrabalhoFerramentas.ConsoleHandler;
     class Program
     {
         static void Main(string[] args)
@@ -14,10 +14,10 @@
             string opcao;
             do
             {
-                Console.Clear();
+                Limpar();
                 Menu();
 
-                opcao = Console.ReadLine();
+                opcao = Ler();
 
 
                 switch (opcao)
@@ -32,14 +32,14 @@
                         AlfabetoHandler.VerificaLetrasPalvraNaoPertencem(alfabeto);
                         break;
                     case "4":
-                        ClassificadorHandler.Execute();
+                        ClassificadorHandler.Classificador();
                         break;
                     case "":
-                        Console.WriteLine("Obrigada por utilizar nosso sistema :)");
+                        Escrever("Obrigada por utilizar nosso sistema :)");
                         continua = false;
                         break;
                     default:
-                        Console.WriteLine("ERROR");
+                        Escrever("ERROR");
                         break;
                 }
 
@@ -49,11 +49,11 @@
 
         static void Menu()
         {
-            Console.WriteLine(" 1 - Informar um alfabeto");
-            Console.WriteLine(" 2 - Validar se letra faz parte do alfabeto");
-            Console.WriteLine(" 3 - Verificar quais letras da palavra não pertencem ao alfabeto");
-            Console.WriteLine(" 4 - Classificador T/I/N por JSON");
-            Console.WriteLine("'ENTER' para sair");
+            Escrever(" 1 - Informar um alfabeto");
+            Escrever(" 2 - Validar se letra faz parte do alfabeto");
+            Escrever(" 3 - Verificar quais letras da palavra não pertencem ao alfabeto");
+            Escrever(" 4 - Classificador T/I/N por JSON");
+            Escrever("[ENTER] para sair");
         }
     }
 }

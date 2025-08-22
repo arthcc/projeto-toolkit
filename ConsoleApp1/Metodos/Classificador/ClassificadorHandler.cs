@@ -4,30 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static TrabalhoFerramentas.ConsoleHandler;
 
 namespace TrabalhoFerramentas.Metodos.Classificador
 {
     public static class ClassificadorHandler
     {
-        public static void Execute()
+        static ConsoleHandler console = new();
+
+        public static void Classificador()
+        {
+            bool continua = true;
+            do
+            {
+                Limpar();
+                Menu();
+
+                string opcao = Console.ReadLine();
+                switch (opcao)
+                {
+                    case "1":
+                        QuestionarioClassificacao();
+                        break;
+                    case "":
+                        Console.WriteLine("Obrigada por utilizar nosso sistema :)");
+                        continua = false;
+                        break;
+                    default:
+                        Console.WriteLine("ERROR");
+                        break;
+                }
+
+            } while (continua);
+        }
+
+        private static void QuestionarioClassificacao()
         {
             List<Problema>? problemas;
-
-            MenuClassificador();
             problemas = ObterListaQuestoes();
 
             if (!ListaProblemasValida(problemas)) return;
 
             IniciarQuestionario(problemas);
-
         }
-        private static void MenuClassificador()
+
+        private static void Menu()
         {
-            Console.WriteLine("Bem vindo ao teste de classificação!");
-            Console.WriteLine("Classificações possiveis: T = Tratável, I = intratável, N = Não computável");
-            Console.WriteLine("Aperte [ENTER] para iniciar uma tentativa!");
+            Console.WriteLine("Bem vindo ao menu de classificação!");
+            Console.WriteLine(" 1 -  Classificador T/I/N por JSON.");
+            console.TextoOpcaoSair();
 
         }
+
 
         private static void IniciarQuestionario(List<Problema> problemas)
         {
@@ -35,14 +63,17 @@ namespace TrabalhoFerramentas.Metodos.Classificador
 
             problemas.ForEach(p =>
             {
-                Console.Clear();
+                Limpar();
                 ExibirQuestao(p);
                 string resposta = ValidarResposta(pontuacao);
                 CorrigirResposta(resposta, p, pontuacao);
-                Console.ReadLine();
+                console.TextoOpcaoContinuar();
+                Pausar();
             });
 
             ExibirPontuacao(pontuacao);
+            console.TextoOpcaoSair();
+            Pausar();
         }
 
         private static void ExibirPontuacao(Pontuacao pontuacao)
@@ -90,11 +121,11 @@ namespace TrabalhoFerramentas.Metodos.Classificador
                 return;
             }
 
-            Console.WriteLine("Resposta Inorreta!");
+            Console.WriteLine("Resposta Incorreta!");
             pontuacao.Erros++;
         }
 
-        private static string ConverterResposta(string? sigla)
+        private static string? ConverterResposta(string? sigla)
         {
 
             switch (sigla)
@@ -119,7 +150,7 @@ namespace TrabalhoFerramentas.Metodos.Classificador
 
         private static bool ListaProblemasValida(List<Problema>? problemas)
         {
-            if (problemas is null)
+            if (problemas is null || problemas.Count == 0 )
             {
                 Console.WriteLine("Erro ao obter lista de problemas!");
                 return false;
@@ -174,6 +205,7 @@ namespace TrabalhoFerramentas.Metodos.Classificador
             ]";
             return json;
         }
-
+    
+        
     }
 }
