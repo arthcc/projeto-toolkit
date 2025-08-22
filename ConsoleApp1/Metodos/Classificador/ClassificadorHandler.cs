@@ -39,6 +39,7 @@ namespace TrabalhoFerramentas.Metodos.Classificador
                 ExibirQuestao(p);
                 string resposta = ValidarResposta(pontuacao);
                 CorrigirResposta(resposta, p, pontuacao);
+                Console.ReadLine();
             });
 
             ExibirPontuacao(pontuacao);
@@ -66,8 +67,9 @@ namespace TrabalhoFerramentas.Metodos.Classificador
 
             while (true)
             {
-                string resposta = PegarResposta();
-                resposta = ConverterResposta(resposta);
+                string? entrada = PegarResposta();
+                string? resposta = ConverterResposta(entrada);
+
                 if (resposta is null)
                 {
                     Console.WriteLine("Dê uma resposta valida!");
@@ -100,7 +102,7 @@ namespace TrabalhoFerramentas.Metodos.Classificador
                 case "T":
                     return "tratavel";
                 case "I":
-                    return "intratável";
+                    return "intratavel";
                 case "N":
                     return "nao_computavel";
                 default:
@@ -124,8 +126,6 @@ namespace TrabalhoFerramentas.Metodos.Classificador
             }
             return true;
         }
-
-
 
         private static string ObterJson()
         {
@@ -168,12 +168,12 @@ namespace TrabalhoFerramentas.Metodos.Classificador
                 },
                 {
                 ""Identificador"": ""P8"",
-                ""Enunciado"": ""Decidir se dois programas sempre
-                produzem a mesma saida"",
+                ""Enunciado"": ""Decidir se dois programas sempre\nproduzem a mesma saida"",
                 ""CategoriaCorreta"": ""nao_computavel""
                 }
             ]";
             return json;
         }
+
     }
 }
