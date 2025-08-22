@@ -1,0 +1,10 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ProjectEvaluation
+/.vs/Projeto Toolkit .NET/CopilotIndices/17.14.1091.29919
+/.vs/Projeto Toolkit .NET/FileContentIndex
+/.vs/Projeto Toolkit .NET/v17
+/.vs/projeto-toolkit/v17
+*.json

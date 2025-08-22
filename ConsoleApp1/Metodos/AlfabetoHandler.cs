@@ -10,22 +10,30 @@ public static class AlfabetoHandler
 
     static bool AlfabetoValido(string alfabeto)
     {
-        if (!string.IsNullOrEmpty(alfabeto)) 
-            return true;
+        if (!string.IsNullOrEmpty(alfabeto)) return true;
 
-        Console.WriteLine("Informe um alfabeto antes");
+        Console.WriteLine("Informe um alfabeto antes ([ENTER] para continuar)");
+        Console.ReadLine();
         return false;
     }
 
     public static void VerificaPertencimento(string alfabeto)
     {
-        if (!AlfabetoValido(alfabeto)) return;
+        if (!AlfabetoValido(alfabeto))
+        {
+            return;
+        }
 
         bool continua = true;
 
+        if (string.IsNullOrEmpty(alfabeto))
+        {
+            Console.WriteLine("Informe um alfabeto antes");
+        }
+
         do
         {
-            Console.WriteLine("Informe uma letra ou pressione ENTER para sair:");
+            Console.WriteLine("Informe uma letra ou 'ENTER' para sair");
             string letra = Console.ReadLine();
 
             if (string.IsNullOrEmpty(letra))
@@ -36,22 +44,24 @@ public static class AlfabetoHandler
 
             bool pertence = alfabeto.Contains(letra);
 
-            Console.WriteLine(
-                $"A letra '{letra}' {(pertence ? "pertence" : "não pertence")} ao alfabeto."
-            );
+            Console.WriteLine($" A letra '{letra}' {(!pertence ? "não" : "")} pertence ao alfabeto");
 
         } while (continua);
+
     }
 
-    public static void VerificaLetrasPalavraNaoPertencem(string alfabeto)
+    public static void VerificaLetrasPalvraNaoPertencem(string alfabeto)
     {
-        if (!AlfabetoValido(alfabeto)) return;
+        if (!AlfabetoValido(alfabeto))
+        {
+            return;
+        }
 
         bool continua = true;
 
         do
         {
-            Console.WriteLine("Informe uma palavra ou pressione ENTER para sair:");
+            Console.WriteLine("Informe uma palavra ou 'ENTER' para sair");
             string palavra = Console.ReadLine();
 
             if (string.IsNullOrEmpty(palavra))
@@ -62,11 +72,9 @@ public static class AlfabetoHandler
 
             List<char> letrasInvalidas = palavra.Where(x => !alfabeto.Contains(x)).ToList();
 
-            if (letrasInvalidas.Any())
-                Console.WriteLine($"As seguintes letras não pertencem: {string.Join(", ", letrasInvalidas)}");
-            else
-                Console.WriteLine("Todas as letras da palavra pertencem ao alfabeto.");
+            Console.WriteLine($"As seguintes letras não pertencem: {string.Join(", ", letrasInvalidas)} ");
 
         } while (continua);
+
     }
 }

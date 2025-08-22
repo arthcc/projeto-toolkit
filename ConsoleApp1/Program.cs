@@ -2,6 +2,7 @@
 {
     using System;
     using TrabalhoFerramentas.Metodos;
+    using TrabalhoFerramentas.Metodos.Classificador;
 
     class Program
     {
@@ -13,37 +14,32 @@
             string opcao;
             do
             {
+                Console.Clear();
                 Menu();
 
                 opcao = Console.ReadLine();
+
 
                 switch (opcao)
                 {
                     case "1":
                         alfabeto = AlfabetoHandler.RecuperarAlfabeto();
                         break;
-
                     case "2":
-                        if (string.IsNullOrEmpty(alfabeto))
-                            Console.WriteLine("Informe um alfabeto primeiro (opção 1).");
-                        else
-                            AlfabetoHandler.VerificaPertencimento(alfabeto);
+                        AlfabetoHandler.VerificaPertencimento(alfabeto);
                         break;
-
                     case "3":
-                        if (string.IsNullOrEmpty(alfabeto))
-                            Console.WriteLine("Informe um alfabeto primeiro (opção 1).");
-                        else
-                            AlfabetoHandler.VerificaLetrasPalavraNaoPertencem(alfabeto); 
+                        AlfabetoHandler.VerificaLetrasPalvraNaoPertencem(alfabeto);
                         break;
-
-                    case "": 
+                    case "4":
+                        ClassificadorHandler.Execute();
+                        break;
+                    case "":
                         Console.WriteLine("Obrigada por utilizar nosso sistema :)");
                         continua = false;
                         break;
-
                     default:
-                        Console.WriteLine("Opção inválida. Tente novamente.");
+                        Console.WriteLine("ERROR");
                         break;
                 }
 
@@ -53,12 +49,11 @@
 
         static void Menu()
         {
-            Console.WriteLine("\n=== MENU ===");
             Console.WriteLine(" 1 - Informar um alfabeto");
             Console.WriteLine(" 2 - Validar se letra faz parte do alfabeto");
             Console.WriteLine(" 3 - Verificar quais letras da palavra não pertencem ao alfabeto");
-            Console.WriteLine(" Pressione apenas ENTER para sair");
-            Console.Write("Escolha uma opção: ");
+            Console.WriteLine(" 4 - Classificador T/I/N por JSON");
+            Console.WriteLine("'ENTER' para sair");
         }
     }
 }
