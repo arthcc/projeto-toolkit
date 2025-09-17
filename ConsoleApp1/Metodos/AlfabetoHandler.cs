@@ -1,24 +1,24 @@
+using static TrabalhoFerramentas.ConsoleHandler;
+
 namespace TrabalhoFerramentas.Metodos;
 
-using System;
-using static TrabalhoFerramentas.ConsoleHandler;
 public static class AlfabetoHandler
 {
-    static ConsoleHandler console = new();
+    static ConsoleHandler Console = new();
     public static string? RecuperarAlfabeto()
     {
         string? alfabeto;
         do
         {
             Limpar();
-            Escrever("Informe o alfabeto: ");
+            Escrever("Informe o alfabeto:");
             alfabeto = Ler()?.Trim();
 
 
         }
         while (!AlfabetoValido(alfabeto));
         Escrever("Alfabeto cadastrado com sucesso!");
-        console.TextoOpcaoContinuar();
+        Console.TextoOpcaoContinuar();
         Pausar();
         return alfabeto;
 
@@ -29,7 +29,7 @@ public static class AlfabetoHandler
         if (!string.IsNullOrWhiteSpace(alfabeto)) return true;
 
         Escrever("Informe um alfabeto valido!");
-        console.TextoOpcaoContinuar();
+        Console.TextoOpcaoContinuar();
         Pausar();
         return false;
     }
@@ -42,7 +42,7 @@ public static class AlfabetoHandler
         );
 
         Escrever("Informe uma letra:");
-        console.TextoOpcaoSair();
+        Console.TextoOpcaoSair();
 
         while (true)
         {
@@ -55,7 +55,7 @@ public static class AlfabetoHandler
             var pertence = set.Contains(char.ToUpperInvariant(ch));
 
             Escrever($"A letra '{ch}' {(pertence ? "" : "não ")}pertence ao alfabeto.");
-            Escrever("Outra letra (vazio para sair):");
+            Escrever("Outra letra: (vazio para sair):");
         }
     }
 
@@ -69,7 +69,7 @@ public static class AlfabetoHandler
         while (true)
         {
             Escrever("Informe uma palavra");
-            console.TextoOpcaoSair();
+            Console.TextoOpcaoSair();
             string palavra = Ler();
 
             if (string.IsNullOrEmpty(palavra))
