@@ -8,23 +8,25 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Berna\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\odahc\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Berna\\Source\\Repos\\projeto-toolkit\\ConsoleApp1\\TrabalhoFerramentas.csproj",
+      "projectUniqueName": "C:\\dsn\\facul\\oitavo_periodo\\projeto-toolkit\\ConsoleApp1\\TrabalhoFerramentas.csproj",
       "projectName": "TrabalhoFerramentas",
-      "projectPath": "C:\\Users\\Berna\\Source\\Repos\\projeto-toolkit\\ConsoleApp1\\TrabalhoFerramentas.csproj",
-      "packagesPath": "C:\\Users\\Berna\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Berna\\Source\\Repos\\projeto-toolkit\\ConsoleApp1\\obj\\",
+      "projectPath": "C:\\dsn\\facul\\oitavo_periodo\\projeto-toolkit\\ConsoleApp1\\TrabalhoFerramentas.csproj",
+      "packagesPath": "C:\\Users\\odahc\\.nuget\\packages\\",
+      "outputPath": "C:\\dsn\\facul\\oitavo_periodo\\projeto-toolkit\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Berna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\odahc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -72,7 +74,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
