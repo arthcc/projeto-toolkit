@@ -1,12 +1,18 @@
 ﻿using System.Text.Json;
-using static TrabalhoFerramentas.ConsoleHandler;
+using static TrabalhoFerramentas.Metodos.Utils.ConsoleUtils;
 
-namespace TrabalhoFerramentas.Metodos.Classificador
+namespace TrabalhoFerramentas.Metodos.AV1.Classificador
 {
+    /// <summary>
+    /// Item AV1: Classificador T/I/N por JSON embutido.
+    /// Lê a lista de problemas, pergunta (T/I/N), corrige e exibe pontuação final.
+    /// </summary>
     public static class ClassificadorHandler
     {
-        static ConsoleHandler console = new();
 
+        /// <summary>
+        /// Loop do menu do classificador. Enter vazio sai.
+        /// </summary>
         public static void Classificador()
         {
             bool continua = true;
@@ -15,43 +21,46 @@ namespace TrabalhoFerramentas.Metodos.Classificador
                 Limpar();
                 Menu();
 
-                string opcao = Console.ReadLine();
+                string? opcao = LerOpcaoMenu("Escolha uma opção", "1", "");
                 switch (opcao)
                 {
                     case "1":
                         QuestionarioClassificacao();
                         break;
                     case "":
-                        Console.WriteLine("Obrigada por utilizar nosso sistema :)");
                         continua = false;
-                        break;
-                    default:
-                        Console.WriteLine("ERROR");
                         break;
                 }
 
             } while (continua);
         }
 
+        /// <summary>
+        /// Orquestra a obtenção da lista e inicia o questionário.
+        /// </summary>
         private static void QuestionarioClassificacao()
         {
-            List<Problema>? problemas;
-            problemas = ObterListaQuestoes();
+            List<Problema>? problemas = ObterListaQuestoes();
 
-            if (!ListaProblemasValida(problemas)) return;
+            if (!ListaProblemasValida(problemas))
+                return;
 
-            IniciarQuestionario(problemas);
+            IniciarQuestionario(problemas!);
         }
 
+        /// <summary>
+        /// Exibe o menu do módulo.
+        /// </summary>
         private static void Menu()
         {
-            Console.WriteLine("Bem vindo ao menu de classificação!");
-            Console.WriteLine(" 1 -  Classificador T/I/N por JSON.");
-            console.TextoOpcaoSair();
-
+            Escrever("Bem vindo ao menu de classificação!");
+            Escrever(" 1 -  Classificador T/I/N por JSON.");
+            TextoOpcaoSair();
         }
 
-
+        /// <summary>
+        /// Loop principal do questionário: pergunta, valida, corrige e pontua.
+        /// </summary>
         private static void IniciarQuestionario(List<Problema> problemas)
         {
             Pontuacao pontuacao = new Pontuacao();
@@ -60,69 +69,70 @@ namespace TrabalhoFerramentas.Metodos.Classificador
             {
                 Limpar();
                 ExibirQuestao(p);
-                string resposta = ValidarResposta(pontuacao);
+
+                string resposta = ValidarResposta();
+
                 CorrigirResposta(resposta, p, pontuacao);
-                console.TextoOpcaoContinuar();
                 Pausar();
             });
-
+            Limpar();
             ExibirPontuacao(pontuacao);
-            console.TextoOpcaoSair();
             Pausar();
         }
 
+        /// <summary>
+        /// Mostra o resumo de acertos/erros.
+        /// </summary>
         private static void ExibirPontuacao(Pontuacao pontuacao)
         {
-            Console.WriteLine("Pontuacao alcançada: ");
-            Console.WriteLine($"Acertos: {pontuacao.Acertos} \n Erros: {pontuacao.Erros}");
+            Escrever("Pontuacao alcançada: ");
+            Escrever($"Acertos: {pontuacao.Acertos} \nErros: {pontuacao.Erros}");
         }
 
+        /// <summary>
+        /// Imprime a questão atual.
+        /// </summary>
         private static void ExibirQuestao(Problema problema)
         {
-            Console.WriteLine($"[{problema.Identificador}] {problema.Enunciado}");
+            Escrever($"[{problema.Identificador}] {problema.Enunciado}");
         }
 
-        private static string? PegarResposta()
+        /// <summary>
+        /// Lê e valida a resposta do usuário como T/I/N.
+        /// Usa ConsoleHandler para garantir entrada válida.
+        /// </summary>
+        private static string ValidarResposta()
         {
-            Console.WriteLine("Informe sua resposta (T/I/N): ");
-            return Console.ReadLine();
+            string respostaSigla = LerOpcaoMenu("Informe sua resposta (T/I/N)", "T", "I", "N");
+         
+            string? respostaNormalizada = ConverterResposta(respostaSigla);
+           
+            if (respostaNormalizada is null)
+                return "tratavel"; 
+            return respostaNormalizada;
         }
 
-        private static string ValidarResposta(Pontuacao pontuacao)
-        {
-
-            while (true)
-            {
-                string? entrada = PegarResposta();
-                string? resposta = ConverterResposta(entrada);
-
-                if (resposta is null)
-                {
-                    Console.WriteLine("Dê uma resposta valida!");
-                    continue;
-                }
-
-                return resposta;
-
-            }
-        }
-
+        /// <summary>
+        /// Corrige uma resposta e atualiza a pontuação.
+        /// </summary>
         private static void CorrigirResposta(string resposta, Problema problema, Pontuacao pontuacao)
         {
-            if (resposta.Equals(problema.CategoriaCorreta))
+            if (resposta.Equals(problema.CategoriaCorreta, StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine("Resposta Correta!");
+                Escrever("Resposta Correta!");
                 pontuacao.Acertos++;
                 return;
             }
 
-            Console.WriteLine("Resposta Incorreta!");
+            Escrever("Resposta Incorreta!");
             pontuacao.Erros++;
         }
 
+        /// <summary>
+        /// Converte T/I/N para as categorias do seu modelo.
+        /// </summary>
         private static string? ConverterResposta(string? sigla)
         {
-
             switch (sigla)
             {
                 case "T":
@@ -136,23 +146,31 @@ namespace TrabalhoFerramentas.Metodos.Classificador
             }
         }
 
-
+        /// <summary>
+        /// Carrega a lista de problemas a partir do JSON embutido.
+        /// </summary>
         private static List<Problema>? ObterListaQuestoes()
         {
             string jsonProblemas = ObterJson();
             return JsonSerializer.Deserialize<List<Problema>>(jsonProblemas);
         }
 
+        /// <summary>
+        /// Verifica se a lista desserializada é válida.
+        /// </summary>
         private static bool ListaProblemasValida(List<Problema>? problemas)
         {
-            if (problemas is null || problemas.Count == 0 )
+            if (problemas is null || problemas.Count == 0)
             {
-                Console.WriteLine("Erro ao obter lista de problemas!");
+                Escrever("Erro ao obter lista de problemas!");
                 return false;
             }
             return true;
         }
 
+        /// <summary>
+        /// JSON embutido com os problemas T/I/N.
+        /// </summary>
         private static string ObterJson()
         {
             string json = @"
@@ -194,13 +212,11 @@ namespace TrabalhoFerramentas.Metodos.Classificador
                 },
                 {
                 ""Identificador"": ""P8"",
-                ""Enunciado"": ""Decidir se dois programas sempre\nproduzem a mesma saida"",
+                ""Enunciado"": ""Decidir se dois programas sempre produzem a mesma saida"",
                 ""CategoriaCorreta"": ""nao_computavel""
                 }
             ]";
             return json;
         }
-    
-        
     }
 }

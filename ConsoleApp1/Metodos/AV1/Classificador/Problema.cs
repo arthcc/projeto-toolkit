@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrabalhoFerramentas.Metodos.Classificador
+namespace TrabalhoFerramentas.Metodos.AV1.Classificador
 {
     public class Problema
     {
