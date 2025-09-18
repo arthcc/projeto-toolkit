@@ -18,7 +18,7 @@ public static class ReconhecedoresHandler
             Escrever(" 1 - L é par?  -> aceita se a quantidade de 'a' em w é PAR");
             Escrever(" 2 - L = { w | w = a b* } -> aceita se w começa com 'a' e o restante é só 'b'");
             Escrever(" [ENTER] para voltar");
-            var op = Ler();
+            string? op = Ler();
 
             switch (op)
             {
@@ -40,7 +40,7 @@ public static class ReconhecedoresHandler
         Escrever("Exemplos inválidos: '' (vazio), 'c', 'a1b', 'ab ' (espaço)");
         Escrever("");
         Escrever("Digite w:");
-        var w = Ler();
+        string? w = Ler();
 
         if (!SigmaUtils.CadeiaEmSigma(w))
         {
@@ -50,7 +50,7 @@ public static class ReconhecedoresHandler
         }
 
         int qtdA = 0;
-        foreach (var ch in w!.ToLowerInvariant()) if (ch == 'a') qtdA++;
+        foreach (char ch in w!.ToLowerInvariant()) if (ch == 'a') qtdA++;
 
         bool aceita = (qtdA % 2 == 0);
         Escrever($"Você digitou: w=\"{w}\"  |w|={w.Length}  #a={qtdA}");
@@ -70,7 +70,7 @@ public static class ReconhecedoresHandler
         Escrever("Exemplos REJEITADOS: '' (vazio), b, ba, aab, abab");
         Escrever("");
         Escrever("Digite w:");
-        var w = Ler();
+        string? w = Ler();
 
         if (!SigmaUtils.CadeiaEmSigma(w))
         {
@@ -79,7 +79,7 @@ public static class ReconhecedoresHandler
             return;
         }
 
-        var s = w!.ToLowerInvariant();
+        string? s = w!.ToLowerInvariant();
         bool aceita = s.Length >= 1 && s[0] == 'a';
         for (int i = 1; aceita && i < s.Length; i++)
             aceita = s[i] == 'b';

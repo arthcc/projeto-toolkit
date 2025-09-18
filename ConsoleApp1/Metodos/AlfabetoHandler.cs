@@ -37,7 +37,7 @@ public static class AlfabetoHandler
     {
         if (!AlfabetoValido(alfabeto)) return;
 
-        var set = new HashSet<char>(
+        HashSet<char> set = new HashSet<char>(
             alfabeto.Trim().ToUpperInvariant()
         );
 
@@ -46,13 +46,13 @@ public static class AlfabetoHandler
 
         while (true)
         {
-            var entrada = Ler();
+            string? entrada = Ler();
 
             if (string.IsNullOrWhiteSpace(entrada))
                 break; 
 
-            var ch = entrada.Trim()[0];
-            var pertence = set.Contains(char.ToUpperInvariant(ch));
+            char ch = entrada.Trim()[0];
+            bool pertence = set.Contains(char.ToUpperInvariant(ch));
 
             Escrever($"A letra '{ch}' {(pertence ? "" : "não ")}pertence ao alfabeto.");
             Escrever("Outra letra: (vazio para sair):");

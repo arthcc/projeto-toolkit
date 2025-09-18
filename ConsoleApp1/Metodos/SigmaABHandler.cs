@@ -10,15 +10,15 @@ public static class SigmaABHandler
         Limpar();
         Escrever("Σ fixo = {a,b}");
         Escrever("Informe um símbolo:");
-        var simbolo = Ler();
+        string? simbolo = Ler();
 
-        var pertenceSimbolo = SigmaUtils.SimboloEmSigma(simbolo);
+        bool pertenceSimbolo = SigmaUtils.SimboloEmSigma(simbolo);
         Escrever(pertenceSimbolo ? "símbolo válido em Σ" : "símbolo inválido em Σ");
 
         Escrever("Informe uma cadeia (palavra) sobre Σ:");
-        var cadeia = Ler();
+        string? cadeia = Ler();
 
-        var pertenceCadeia = SigmaUtils.CadeiaEmSigma(cadeia);
+        bool pertenceCadeia = SigmaUtils.CadeiaEmSigma(cadeia);
         Escrever(pertenceCadeia ? "cadeia válida em Σ*" : "cadeia inválida (fora de Σ*)");
 
         TextoFinal();

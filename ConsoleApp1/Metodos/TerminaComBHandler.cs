@@ -9,7 +9,7 @@ public static class TerminaComBHandler
     {
         Limpar();
         Escrever("Σ fixo = {a,b}. Informe a cadeia:");
-        var w = Ler();
+        string? w = Ler();
 
         if (!SigmaUtils.CadeiaEmSigma(w))
         {
@@ -18,7 +18,7 @@ public static class TerminaComBHandler
             return;
         }
 
-        var resposta = (!string.IsNullOrEmpty(w) && char.ToLowerInvariant(w[^1]) == 'b') ? "SIM" : "NAO";
+        string? resposta = (!string.IsNullOrEmpty(w) && char.ToLowerInvariant(w[^1]) == 'b') ? "SIM" : "NAO";
         Escrever(resposta);
         Pausar();
     }

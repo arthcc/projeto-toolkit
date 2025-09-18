@@ -4,6 +4,8 @@ namespace TrabalhoFerramentas.Metodos;
 
 public static class AvaliadorProposicionalHandler
 {
+    private readonly record struct Linha(bool P, bool Q, bool R, bool V);
+
     public static void Menu()
     {
         bool continua = true;
@@ -20,7 +22,7 @@ public static class AvaliadorProposicionalHandler
             Escrever(" 4 - Tabela-verdade de F2");
             Escrever(" [ENTER] para sair");
 
-            var op = Ler();
+            string? op = Ler();
             switch (op)
             {
                 case "1": AvaliarFormula(Formula1, "F1", "(P && Q) || !R"); break;
@@ -46,12 +48,12 @@ public static class AvaliadorProposicionalHandler
         Escrever("Como responder: digite T (Verdadeiro) ou F (Falso). Ex.: T");
         Escrever("");
 
-        var P = LerBoolComPrompt("Informe P (T/F): ");
-        var Q = LerBoolComPrompt("Informe Q (T/F): ");
-        var R = LerBoolComPrompt("Informe R (T/F): ");
+        bool P = LerBoolComPrompt("Informe P (T/F): ");
+        bool Q = LerBoolComPrompt("Informe Q (T/F): ");
+        bool R = LerBoolComPrompt("Informe R (T/F): ");
 
         Escrever($"Você informou: P={BoolToTF(P)}, Q={BoolToTF(Q)}, R={BoolToTF(R)}");
-        var v = f(P, Q, R);
+        bool v = f(P, Q, R);
         Escrever($"Resultado: {nome} = {(v ? "T (Verdadeiro)" : "F (Falso)")}");
         Escrever("");
         Escrever("Dica: A -> B é falso APENAS quando A=T e B=F; caso contrário é verdadeiro.");
@@ -67,15 +69,14 @@ public static class AvaliadorProposicionalHandler
         Escrever("Ordem: P Q R | valor   (T=Verdadeiro, F=Falso)");
         Escrever("");
 
-        var bits = new[] { false, true };
+        bool[] bits = new bool[] { false, true };
 
-        var linhas = bits
-            .SelectMany(P => bits, (P, Q) => new { P, Q })
-            .SelectMany(t => bits, (t, R) => new { t.P, t.Q, R, V = f(t.P, t.Q, R) });
+        IEnumerable<Linha> linhas =
+            bits.SelectMany(P => bits, (P, Q) => new { P, Q })
+                .SelectMany(t => bits, (t, R) => new Linha(t.P, t.Q, R, f(t.P, t.Q, R)));
 
-        foreach (var l in linhas)
+        foreach (Linha l in linhas)
             Escrever($"{BoolToTF(l.P)} {BoolToTF(l.Q)} {BoolToTF(l.R)} | {BoolToTF(l.V)}");
-
 
         Pausar();
     }
@@ -86,7 +87,7 @@ public static class AvaliadorProposicionalHandler
         {
             Escrever(msg);
             Escrever("Exemplos válidos: T, F");
-            var s = Ler()?.Trim().ToUpperInvariant();
+            string? s = Ler()?.Trim().ToUpperInvariant();
             if (s == "T") return true;
             if (s == "F") return false;
             Escrever("Entrada inválida. Use apenas T ou F.");
